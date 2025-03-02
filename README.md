@@ -33,3 +33,10 @@
 
 - after successfull login , user rederect to feed page
     - by using useNavigate() Hook 
+
+- when token is present user is redirect to feed otherwise login feature added
+    - in the body create a function named fetchUser
+        - if the user is present with the token , store is updated 
+    - fetchuser function is called from useEffect , which call immediately after component is rendered
+
+- logout feature

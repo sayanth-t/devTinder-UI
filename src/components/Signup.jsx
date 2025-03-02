@@ -37,7 +37,7 @@ const SignupForm = () => {
         { withCredentials: true }
       );
 
-      console.log(res);
+     
       navigate('/login');
     } catch (error) {
       console.log(error);

@@ -8,9 +8,9 @@ const userSlice = createSlice({
             return action.payload
         } , 
         editUser : ( state , action ) => {
-
+            return action.payload
         } , 
-        removeUser : ( state , action ) => {
+        removeUser : (  ) => {
             return null
         }
     }
