@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
-const EditProfile = ({firstName,setFirstName,lastName,setLastname,age,setAge,handleToast}) => {
+const EditProfile = ({firstName,setFirstName,lastName,setLastname,age,setAge,handleToast,about,setAbout}) => {
 
   const dispatch = useDispatch()
 
@@ -10,13 +10,14 @@ const EditProfile = ({firstName,setFirstName,lastName,setLastname,age,setAge,han
        try {
         e.preventDefault() ;
 
-        const res = await axios.post("http://localhost:3000/profile/edit",{ firstName , lastName , age } , { withCredentials:true , headers: { "Content-Type": "application/json" }  }) ;
+        const res = await axios.post("http://localhost:3000/profile/edit",{ firstName , lastName , age , about } , { withCredentials:true , headers: { "Content-Type": "application/json" }  }) ;
         
         dispatch(addUser(res?.data?.userData)) ;
 
-        handleToast() ;
+        handleToast("success") ;
        } catch (error) {
-        console.log(error.message)
+        console.log(error.message) 
+        handleToast("failed") ;
        }
     }
     return (
@@ -92,7 +93,28 @@ const EditProfile = ({firstName,setFirstName,lastName,setLastname,age,setAge,han
               />
             </div>
 
-       
+            {/* About */}
+            <div>
+              <label
+                htmlFor="age"
+                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >
+                About
+              </label>
+              <input
+                type="text"
+                value={ about ? about : "" }
+                onChange={(e) => {
+                  setAbout(e.target.value);
+                }}
+                name="age"
+                id="age"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="about yourself"
+                required
+              />
+              
+            </div>
 
             <button
               type="submit"

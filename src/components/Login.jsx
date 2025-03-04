@@ -19,9 +19,7 @@ const Login = () => {
 
   const user = useSelector((state)=> state.user ) ;
 
-  if(user){
-    navigate("/feed")
-  }
+
 
   const handleLogin = async () => {
     try {
@@ -36,7 +34,7 @@ const Login = () => {
 
       dispatch(addUser(res.data.user)) ;
       
-      navigate('/')
+      navigate('/feed')
 
     } catch (error) {
       if(error.response) {

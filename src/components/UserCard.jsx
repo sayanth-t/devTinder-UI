@@ -1,24 +1,26 @@
+
 const UserCard = ({ feedUser }) => {
 
+  const {firstName,lastName,age,avatarURL,about} = feedUser 
 
   return (
     <section className="min-h-screen w-full flex justify-center items-center">
       <div className="card bg-base-100 w-96 shadow-sm">
         <figure>
           <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+            src={avatarURL}
             alt="Shoes"
           />
         </figure>
         <div className="card-body">
-          <h2 className="card-title text-2xl font-bold">{ feedUser[0]?.firstName + " " + feedUser[0]?.lastName }</h2>
-          <h4 className="text-md text-slate-500 font-bold ">{feedUser[0]?.age}</h4>
+          <h2 className="card-title text-2xl font-bold">{ firstName + " " + lastName }</h2>
+          <h4 className="text-md text-slate-500 font-bold ">{age}</h4>
           <p>
-            A card component has a figure, a body part, and inside body there
-            are title and actions parts
+           {about}
           </p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy Now</button>
+            <button className="btn btn-primary">Interested</button>
+            <button className="btn btn-primary">Ignore</button>
           </div>
         </div>
       </div>

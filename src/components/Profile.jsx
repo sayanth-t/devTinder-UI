@@ -1,30 +1,61 @@
-import { useState } from 'react';
+import { useState , useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 import EditProfile from './EditProfile';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import styles
+import { addConnections } from '../utils/connectionsSlice';
 
 const Profile = () => {
 
-  const handleToast = () => {
-    toast.success(
-       'Profile Updated',
-      {
+  const handleToast = (type) => {
+    if (type === 'success') {
+      toast.success('Profile Updated', {
         position: 'top-right',
         autoClose: 3000,
-      }
-    );
-  }
+      });
+    } else {
+      toast.error('invalid credentials !', {
+        position: 'top-right',
+        autoClose: 3000,
+      });
+    }
+  };
 
-  const user = useSelector((state)=> state.user ) ;
+  const user = useSelector((state) => state.user );
 
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastname] = useState(user.lastName);
   const [age, setAge] = useState(user.age);
   const [emailID, setEmailID] = useState(user.emailID);
   const [avatarURL, setAvatarURL] = useState(user.avatarURL);
+  const [about, setAbout] = useState(user.about);
+
+  const [ connectionsCount , setConnectionsCount ] = useState(0) ;
+ 
+  const dispatch = useDispatch()
+
+  const getConnections = async () => {
+    try {
+      const res = await axios.get(
+        'http://localhost:3000/user/request/connections',
+        { withCredentials: true }
+      );
+      const connectionsCount = await res?.data?.connections
+      dispatch(addConnections(connectionsCount)) ;
+      setConnectionsCount(connectionsCount.length) ;
+    
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getConnections();
+  }, []);
 
   return (
     <section className="min-h-screen flex justify-center items-center">
@@ -35,8 +66,10 @@ const Profile = () => {
             {/* Stats Section */}
             <div className="grid grid-cols-3 text-center order-last md:order-first mt-32 md:mt-0">
               <div>
-                <p className="font-bold text-gray-700 text-xl">22</p>
-                <p className="text-gray-400">Friends</p>
+                <Link to={'/connections'}>
+                  <p className="font-bold text-gray-700 text-xl">{ connectionsCount }</p>
+                  <p className="text-gray-400">Connections</p>
+                </Link>
               </div>
               <div>
                 <p className="font-bold text-gray-700 text-xl">10</p>
@@ -50,19 +83,12 @@ const Profile = () => {
 
             {/* Profile Picture */}
             <div className="relative">
-              <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-                <svg
-                  xmlns={avatarURL}
-                  className="h-24 w-24"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+              <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center border-4 border-white dark:border-gray-800 overflow-hidden">
+                <img
+                  src={avatarURL}
+                  alt="user avatar"
+                  className="object-cover w-full h-full rounded-full transition-transform duration-300 hover:scale-105"
+                />
               </div>
             </div>
           </div>
@@ -77,14 +103,22 @@ const Profile = () => {
             <p className="mt-8 text-gray-500">
               Solution Manager - Creative Tim Officer
             </p>
-            <p className="mt-2 text-gray-500">University of Computer Science</p>
+            <p className="mt-2 text-gray-500">{about && about}</p>
           </div>
 
           {/* Bio Section */}
           <div className="mt-12 flex flex-col justify-center">
-            
-               <EditProfile firstName={firstName} setFirstName={setFirstName} lastName={lastName} setLastname={setLastname} age={age} setAge={setAge} handleToast={handleToast}/>
-         
+            <EditProfile
+              firstName={firstName}
+              setFirstName={setFirstName}
+              lastName={lastName}
+              setLastname={setLastname}
+              age={age}
+              setAge={setAge}
+              handleToast={handleToast}
+              about={about}
+              setAbout={setAbout}
+            />
           </div>
         </div>
       </div>

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFeed } from '../utils/feedSlice';
 import UserCard from './userCard';
 
-
 const Feed = () => {
 
   const feedData = useSelector((state) => state.feed);
@@ -28,11 +27,17 @@ const Feed = () => {
     fetchFeed();
   }, []);
 
-  console.log(feedData)
-
-
-  return <div>{
-    feedData.length > 0 && <UserCard feedUser={feedData}/>}</div>;
+  const feedUsers = Array.from(feedData) ;
+  
+  return (
+    <div>
+      {feedUsers.map((user) => (
+        <div key={user._id}>
+          <UserCard feedUser={user}/>
+        </div>
+      ))}
+    </div>
+  )
 };
 
 export default Feed;

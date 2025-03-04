@@ -21,7 +21,11 @@ const Body = () => {
                 { withCredentials : true }
             )
             
-            dispatch(addUser(res.data.message))
+            dispatch(addUser(res.data.message)) ;
+
+            if(res){
+                naviagate("/feed")
+            }
             
         } catch (err) {
             // user only navigate to login when error 401 happens => this find from postman . make profile get api without login

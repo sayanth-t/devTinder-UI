@@ -40,3 +40,9 @@
     - fetchuser function is called from useEffect , which call immediately after component is rendered
 
 - logout feature
+
+- swipe feature
+    - by using @use-gesture/react , @react-spring/web packages
+        - by using @react-spring/web , we can create animated components
+
+- connections feature
