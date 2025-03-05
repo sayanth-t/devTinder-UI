@@ -9,7 +9,7 @@ const UserCard = ({ feedUser }) => {
         <figure>
           <img
             src={avatarURL}
-            alt="Shoes"
+            alt="UserImg"
           />
         </figure>
         <div className="card-body">

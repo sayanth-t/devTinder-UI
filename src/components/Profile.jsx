@@ -71,14 +71,14 @@ const Profile = () => {
                   <p className="text-gray-400">Connections</p>
                 </Link>
               </div>
-              <div>
+              {/* <div>
                 <p className="font-bold text-gray-700 text-xl">10</p>
                 <p className="text-gray-400">Photos</p>
               </div>
               <div>
                 <p className="font-bold text-gray-700 text-xl">89</p>
                 <p className="text-gray-400">Comments</p>
-              </div>
+              </div> */}
             </div>
 
             {/* Profile Picture */}

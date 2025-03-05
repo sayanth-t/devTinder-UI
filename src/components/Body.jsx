@@ -5,15 +5,27 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
+import { addRequests } from "../utils/requestsSlice";
 
 
 const Body = () => {
 
     const naviagate = useNavigate()
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch() ;
 
+    // for fetching requests
+    const fetchRequests = async () => {
+        try {
 
+            const res = await axios.get("http://localhost:3000/user/request/recieved",{withCredentials:true}) ;
+            dispatch(addRequests( res?.data?.requests ))
+        } catch (err) {
+            console.log(err.message)
+        }
+    }
+
+    // for fetching logged user
     const fetchUser =  async() => {
         try {
 
@@ -29,16 +41,15 @@ const Body = () => {
             
         } catch (err) {
             // user only navigate to login when error 401 happens => this find from postman . make profile get api without login
-            if(err.status === 401 ){
-                naviagate('/login')
-            }
+            
             console.log(err.message)
             
         }
     }
 
     useEffect(()=>{
-        fetchUser()
+        fetchUser() ,
+        fetchRequests()
     }, [] )
 
     return (

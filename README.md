@@ -45,4 +45,5 @@
     - by using @use-gesture/react , @react-spring/web packages
         - by using @react-spring/web , we can create animated components
 
-- connections feature
+- New page - see all my connections
+- New page - seel all my connection requests

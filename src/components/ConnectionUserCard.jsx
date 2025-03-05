@@ -12,7 +12,7 @@ const ConnectionUserCard = ({ user }) => {
       <div className="mr-4 flex-shrink-0">
         <img
           alt={`${firstName}'s Avatar`}
-          src={user.avatarURL} // Fallback image
+          src={avatarURL} // Fallback image
           className="h-12 w-12 rounded-full object-cover object-center"
         />
       </div>
@@ -21,7 +21,7 @@ const ConnectionUserCard = ({ user }) => {
           {firstName} , {lastName}
         </h6>
         <p className="text-slate-500 text-sm">{age}</p>
-        <p className="text-slate-500 text-sm">{about}</p>
+        <p className="text-slate-500 text-sm lg:max-w-lg">{about}</p>
       </div>
       <div className="flex items-center gap-3">
         {/* Message Icon */}

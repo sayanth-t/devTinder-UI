@@ -20,7 +20,9 @@ const Header = () => {
   };
 
   
-  const notificationCount = 3; 
+  const requests = useSelector((state)=> state?.requests ) ;
+
+  const requestsCount = requests &&  Array.from(requests).length
 
   return (
     <div className="navbar bg-base-100 fixed z-10 lg:px-20 shadow-lg">
@@ -33,10 +35,12 @@ const Header = () => {
       <div className="flex gap-8 items-center">
         {/* Notification Icon with Count */}
         <div className="relative">
-          <IoMdNotificationsOutline className="h-8 w-8 text-gray-700 cursor-pointer" />
-           { notificationCount > 0 && (
+          <Link to={'/requests'}>
+            <IoMdNotificationsOutline className="h-8 w-8 text-gray-700 cursor-pointer" />
+          </Link>
+           { requestsCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-              {notificationCount}
+              {requestsCount}
             </span>
           )}
         </div>
