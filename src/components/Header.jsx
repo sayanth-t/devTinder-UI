@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { removeUser } from '../utils/userSlice';
 import { IoMdNotificationsOutline } from 'react-icons/io';
+import { removeFeed } from '../utils/feedSlice';
+import { removeRequests } from '../utils/requestsSlice';
 
 const Header = () => {
   const user = useSelector((state) => state.user);
@@ -13,6 +15,8 @@ const Header = () => {
     try {
       await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
       dispatch(removeUser());
+      dispatch(removeFeed());
+      dispatch(removeRequests());
       navigate('/login');
     } catch (error) {
       console.log(error.message);

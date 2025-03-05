@@ -1,7 +1,7 @@
 import { HiOutlineChatAlt, HiOutlineUserRemove } from 'react-icons/hi'; 
 
 const ConnectionUserCard = ({ user }) => {
-  const { firstName, lastName, age, about, avatarURL } = user;
+  const { _id , firstName, lastName, age, about, avatarURL } = user;
 
   return (
  

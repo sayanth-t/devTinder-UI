@@ -1,13 +1,13 @@
-import { useState , useEffect } from 'react';
+import { useEffect, useMemo, useState  } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-
+import { addConnections } from '../utils/connectionsSlice';
 import EditProfile from './EditProfile';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector } from 'react-redux';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import styles
-import { addConnections } from '../utils/connectionsSlice';
+import axios from 'axios';
+
 
 const Profile = () => {
 
@@ -25,6 +25,26 @@ const Profile = () => {
     }
   };
 
+  const dispatch = useDispatch()
+
+  // for fetching connections
+  const fetchConnections = async () => {
+    try {
+      const res = await axios.get(
+        'http://localhost:3000/user/request/connections',
+        { withCredentials: true }
+      );
+
+      dispatch(addConnections(res.data.connections));
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  useEffect(()=>{
+    fetchConnections();
+  },[])
+
   const user = useSelector((state) => state.user );
 
   const [firstName, setFirstName] = useState(user.firstName);
@@ -34,28 +54,9 @@ const Profile = () => {
   const [avatarURL, setAvatarURL] = useState(user.avatarURL);
   const [about, setAbout] = useState(user.about);
 
-  const [ connectionsCount , setConnectionsCount ] = useState(0) ;
- 
-  const dispatch = useDispatch()
+  const connections = useSelector( (state)=> state.connections )
 
-  const getConnections = async () => {
-    try {
-      const res = await axios.get(
-        'http://localhost:3000/user/request/connections',
-        { withCredentials: true }
-      );
-      const connectionsCount = await res?.data?.connections
-      dispatch(addConnections(connectionsCount)) ;
-      setConnectionsCount(connectionsCount.length) ;
-    
-    } catch (err) {
-      console.log(err.message);
-    }
-  };
-
-  useEffect(() => {
-    getConnections();
-  }, []);
+  const connectionsCount = useMemo(() => connections.length, [connections])
 
   return (
     <section className="min-h-screen flex justify-center items-center">

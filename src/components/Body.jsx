@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
-import { addRequests } from "../utils/requestsSlice";
+
 
 
 const Body = () => {
@@ -14,16 +14,7 @@ const Body = () => {
 
     const dispatch = useDispatch() ;
 
-    // for fetching requests
-    const fetchRequests = async () => {
-        try {
-
-            const res = await axios.get("http://localhost:3000/user/request/recieved",{withCredentials:true}) ;
-            dispatch(addRequests( res?.data?.requests ))
-        } catch (err) {
-            console.log(err.message)
-        }
-    }
+   
 
     // for fetching logged user
     const fetchUser =  async() => {
@@ -48,8 +39,7 @@ const Body = () => {
     }
 
     useEffect(()=>{
-        fetchUser() ,
-        fetchRequests()
+        fetchUser() 
     }, [] )
 
     return (

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 
 // Import toastify
@@ -16,9 +16,6 @@ const Login = () => {
   const dispatch = useDispatch() ;
 
   const navigate = useNavigate() 
-
-  const user = useSelector((state)=> state.user ) ;
-
 
 
   const handleLogin = async () => {

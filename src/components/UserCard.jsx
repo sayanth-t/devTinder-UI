@@ -1,7 +1,7 @@
 
-const UserCard = ({ feedUser }) => {
+const UserCard = ({ feedUser , sendRequest }) => {
 
-  const {firstName,lastName,age,avatarURL,about} = feedUser 
+  const {_id,firstName,lastName,age,avatarURL,about} = feedUser 
 
   return (
     <section className="min-h-screen w-full flex justify-center items-center">
@@ -19,8 +19,8 @@ const UserCard = ({ feedUser }) => {
            {about}
           </p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">Interested</button>
-            <button className="btn btn-primary">Ignore</button>
+            <button onClick={()=>sendRequest("interested",_id)} className="btn btn-primary">Interested</button>
+            <button onClick={()=>sendRequest("ignored",_id)} className="btn btn-primary">Ignore</button>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
-const RequestUserCard = ({ request }) => {
-  const { firstName, lastName, age, avatarURL, about } = request?.fromUserId;
+const RequestUserCard = ({ request , reviewRequest }) => {
+  const { firstName, lastName, age, avatarURL, about } = request.fromUserId;
+  const requestId = request._id ;
 
   return (
     <div
@@ -13,7 +14,7 @@ const RequestUserCard = ({ request }) => {
           className="h-12 w-12 rounded-full object-cover object-center"
         />
       </div>
-      <div className="flex-1 flex-row justify-around ">
+      <div className="flex-1 flex-row justify-around  lg:min-w-lg">
         <h6 className="text-slate-800 font-medium">
           {firstName} , {lastName}
         </h6>
@@ -22,10 +23,10 @@ const RequestUserCard = ({ request }) => {
       </div>
       <div className="flex items-center gap-3">
         <div className="card-actions flex flex-col sm:flex-row justify-center sm:justify-end gap-2 sm:gap-4">
-          <button className="btn btn-primary w-full sm:w-auto hover:bg-blue-600 transition-colors rounded-lg shadow-md">
+          <button onClick={()=>reviewRequest("accepted",requestId)} className="btn btn-primary w-full sm:w-auto hover:bg-blue-600 transition-colors rounded-lg shadow-md">
             Accept
           </button>
-          <button className="btn btn-primary w-full sm:w-auto hover:bg-blue-600 transition-colors rounded-lg shadow-md">
+          <button onClick={()=>reviewRequest("rejected",requestId)} className="btn btn-primary w-full sm:w-auto hover:bg-blue-600 transition-colors rounded-lg shadow-md">
             Reject
           </button>
         </div>
