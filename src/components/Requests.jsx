@@ -22,7 +22,7 @@ const Requests = () => {
   const pendingRequests = Array.from(requests || []);
 
   return (
-    <div className="lg:min-h-screen flex justify-center items-center">
+    <div className="lg:min-h-screen flex flex-col gap-3  justify-center items-center">
       { pendingRequests.length === 0 ? (
         <div>
             <h2>No Requests</h2>

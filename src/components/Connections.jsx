@@ -5,8 +5,6 @@ import ConnectionUserCard from './ConnectionUserCard';
 const Connections = () => {
   const connections = useSelector((state) => state.connections);
 
-
-
   if (connections.length === 0) {
     return (
       <div className="lg:min-h-screen flex justify-center items-center">
@@ -23,7 +21,7 @@ const Connections = () => {
       <div>
         <h2>Connections</h2>
       </div>
-      <div className="min-h-96 lg:min-h-screen  flex justify-center items-center p-4">
+      <div className="min-h-96 lg:min-h-screen flex flex-col gap-3 justify-center items-center p-4">
         { 
           connectionList.map((user) => (
             <div

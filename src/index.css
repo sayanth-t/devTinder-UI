@@ -1,2 +1,27 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @plugin "daisyui";
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer {
+  animation: shimmer 1.5s infinite;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  border-radius: 8px;
+}
+
+/* for login background image */
+.dev-bg {
+  background-image: url('https://img.freepik.com/free-photo/html-css-collage-concept_23-2150061955.jpg?t=st=1741252331~exp=1741255931~hmac=2fe6682dc418b34a4f8d3e5cdd28c6009d2da7fe7a8f343a834f4efbe46aede6&w=1060');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; /* Ensures the image covers the entire area */
+  min-height: 100vh; /* Ensures it fills the viewport height */
+}

@@ -11,9 +11,10 @@ import Connections from './components/Connections.jsx';
 import Requests from './components/Requests.jsx';
 
 function App() {
+  
   return (
     <Provider store={appStore}>
-      <Router>
+      <Router >
         <Routes>
           <Route path="/" element={<Body />}>
             <Route path="/login" element={<Login />} />

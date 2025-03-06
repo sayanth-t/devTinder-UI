@@ -13,10 +13,9 @@ const Login = () => {
   const [emailID, setEmailID] = useState('asarpp123@gmail.com');
   const [password, setPassword] = useState('asArpp@123');
 
-  const dispatch = useDispatch() ;
+  const dispatch = useDispatch();
 
-  const navigate = useNavigate() 
-
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
@@ -26,29 +25,27 @@ const Login = () => {
           emailID,
           password,
         },
-        { withCredentials : true } 
+        { withCredentials: true }
       );
 
-      dispatch(addUser(res.data.user)) ;
-      
-      navigate('/feed')
+      dispatch(addUser(res.data.user));
 
+      navigate('/feed');
     } catch (error) {
-      if(error.response) {
-        toast.error(error.response.data.message || "Login Failed", {
-          position: "top-right",
+      if (error.response) {
+        toast.error(error.response.data.message || 'Login Failed', {
+          position: 'top-right',
           autoClose: 3000,
         });
-      }
-      else{
-        console.log("Login failed:", error.message);
+      } else {
+        console.log('Login failed:', error.message);
       }
     }
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg dark:border dark:bg-gray-800 dark:border-gray-700">
+    <section className="dev-bg dark:bg-gray-900 min-h-screen flex items-center justify-center p-4 ">
+      <div className="w-full max-w-sm sm:max-w-md bg-gray-100 shadow-xl rounded-lg  dark:border dark:bg-gray-800 dark:border-gray-700 mx-auto">
         <div className="p-6 space-y-6 sm:p-8">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">
             Sign in to your account

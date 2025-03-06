@@ -13,7 +13,11 @@ const Header = () => {
 
   const handleLogOut = async () => {
     try {
-      await axios.post('http://localhost:3000/logout', {}, { withCredentials: true });
+      await axios.post(
+        'http://localhost:3000/logout',
+        {},
+        { withCredentials: true }
+      );
       dispatch(removeUser());
       dispatch(removeFeed());
       dispatch(removeRequests());
@@ -23,54 +27,76 @@ const Header = () => {
     }
   };
 
-  
-  const requests = useSelector((state)=> state?.requests ) ;
+  const requests = useSelector((state) => state?.requests);
 
-  const requestsCount = requests &&  Array.from(requests).length
+  const requestsCount = requests && Array.from(requests).length;
 
   return (
-    <div className="navbar bg-base-100 fixed z-10 lg:px-20 shadow-lg">
-      <div className="flex-1">
-        <Link to={'/feed'} className="btn btn-ghost text-xl">
+    <div className="navbar fixed z-10 lg:px-20 bg-gradient-to-b from-black/20 to-transparent ">
+      <div className="flex-1 text-white">
+        <Link to={'/feed'} className="text-xl font-bold">
           devTinder
         </Link>
       </div>
 
       <div className="flex gap-8 items-center">
         {/* Notification Icon with Count */}
-        <div className="relative">
-          <Link to={'/requests'}>
-            <IoMdNotificationsOutline className="h-8 w-8 text-gray-700 cursor-pointer" />
-          </Link>
-           { requestsCount > 0 && (
-            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
-              {requestsCount}
-            </span>
-          )}
-        </div>
+        {user && (
+          <div className="relative">
+            <Link to={'/requests'}>
+              <IoMdNotificationsOutline className="h-8 w-8 text-gray-700 cursor-pointer" />
+            </Link>
+            {requestsCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                {requestsCount}
+              </span>
+            )}
+          </div>
+        )}
 
         {/* User Avatar Dropdown */}
         {user && (
           <div className="dropdown dropdown-end">
-            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-              <div className="w-10 rounded-full">
-                <img alt="User Avatar" src={user.avatarURL} />
+            <Link to={'/profile'}>
+              <div className="flex flex-row justify-center items-center gap-2 hover:cursor-pointer">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img alt="User Avatar" src={user.avatarURL} />
+                  </div>
+                </div>
+                <div>
+                  <p>{user.firstName}</p>
+                </div>
               </div>
-            </div>
+            </Link>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100/90 backdrop-blur-lg rounded-box z-1 mt-3 w-52 p-2 shadow-lg transform transition-all duration-300 ease-in-out origin-top scale-0 dropdown-open:scale-100"
             >
               <li>
-                <Link to={'/profile'} className="justify-between">
+                <Link
+                  to={'/profile'}
+                  className="justify-between hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 rounded-lg"
+                >
                   {user.firstName}
                 </Link>
               </li>
               <li>
-                <a>Settings</a>
+                <a className="hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 rounded-lg">
+                  Settings
+                </a>
               </li>
               <li>
-                <a onClick={handleLogOut}>Logout</a>
+                <a
+                  onClick={handleLogOut}
+                  className="hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 rounded-lg"
+                >
+                  Logout
+                </a>
               </li>
             </ul>
           </div>
