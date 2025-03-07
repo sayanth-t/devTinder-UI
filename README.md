@@ -47,3 +47,6 @@
 
 - New page - see all my connections
 - New page - seel all my connection requests
+
+- New Section - for showing messages and connections list
+    - install lucid react for icons 

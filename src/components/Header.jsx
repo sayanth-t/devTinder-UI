@@ -32,10 +32,10 @@ const Header = () => {
   const requestsCount = requests && Array.from(requests).length;
 
   return (
-    <div className="navbar fixed z-10 lg:px-20 bg-gradient-to-b from-black/20 to-transparent ">
+    <div className="navbar fixed z-10 lg:px-20 ">
       <div className="flex-1 text-white">
         <Link to={'/feed'} className="text-xl font-bold">
-          devTinder
+          <img className='w-21' src="Leonardo_Phoenix_09_A_modern_sleek_and_vibrant_logo_for_devTin_3.png" alt="devTinder" />
         </Link>
       </div>
 

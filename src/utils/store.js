@@ -5,7 +5,7 @@ import feedReducer from './feedSlice'
 import connectionsReducer from './connectionsSlice'
 import requestsReducer from './requestsSlice'
 import messageReducer from './messageSlice'
-import selectedChat from './SelectedUserSlice' ;
+import selectedUser from './SelectedUserSlice' ;
 
 const appStore = configureStore({
     reducer : {
@@ -14,7 +14,7 @@ const appStore = configureStore({
         connections : connectionsReducer,
         requests : requestsReducer ,
         message : messageReducer ,
-        selectedChat : selectedChat
+        selectedUser : selectedUser
     }
 })
 

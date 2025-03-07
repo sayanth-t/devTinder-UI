@@ -5,10 +5,11 @@ const messageSlice = createSlice({
     initialState : [] ,
     reducers : {
         addMessages : (state,action) => action.payload ,
+        addNewMessage : (state,action) => [...state,action.payload] ,
         removeMessage : () => []
     }
 
 })
 
-export const {addMessages,removeMessage} = messageSlice.actions ;
+export const {addMessages,removeMessage,addNewMessage} = messageSlice.actions ;
 export default messageSlice.reducer ;

@@ -19,7 +19,7 @@ const Connections = () => {
   return (
     <div className="lg:min-h-screen flex-col">
       <div>
-        <h2>Connections</h2>
+        {/* <h2 >Connections</h2> */}
       </div>
       <div className="min-h-96 lg:min-h-screen flex flex-col gap-3 justify-center items-center p-4">
         { 

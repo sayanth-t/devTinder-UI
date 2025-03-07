@@ -10,11 +10,13 @@ import SideSectionShimmer from './shimmer/SideSectionShimmer';
 import { addConnections } from '../utils/connectionsSlice';
 import {  addSelectedUser } from '../utils/SelectedUserSlice';
 import { addMessages } from '../utils/messageSlice';
+import NoChatSelected from './NoChatSelected';
+import ChatContainer from './ChatContainer';
 
 
 const Feed = () => {
   const feedData = useSelector((state) => state.feed );
-  const selectedUser = useSelector((state)=> state.selectedChat ) ;
+  const selectedUser = useSelector((state)=> state.selectedUser ) ;
   
   const dispatch = useDispatch();
 
@@ -73,9 +75,9 @@ const Feed = () => {
   };
 
   // fetch messages 
-  const getMessage = async (toUserId) => {
-    const res = await axios.get("http://localhost:3000/message/"+toUserId , {withCredentials: true}) ;
-    dispatch(addSelectedUser( toUserId )) ;
+  const getMessage = async (toUser) => {
+    const res = await axios.get("http://localhost:3000/message/"+toUser._id , {withCredentials: true}) ;
+    dispatch(addSelectedUser( toUser )) ;
     dispatch(addMessages(res.data.data))
   } 
 
@@ -108,7 +110,12 @@ const Feed = () => {
         <UserCard feedUser={feedUsers[0]} sendRequest={sendConnection} />
       </div>
       {/* Hide SideSection on small screens, show on large screens */}
-      <div className="h-full hidden lg:block">
+      <div className="bg-gray-50 flex h-full rounded-lg overflow-hidden pt-16 max-md:max-w-sm max-md:hidden">
+    
+        <div className='lg:min-w-sm md:min-w-2xs'>
+         { !selectedUser ? <NoChatSelected/> : <ChatContainer/>}
+        </div>
+
         <SideSection getMessage={getMessage} selectedUser={selectedUser} />
       </div>
     </div>
