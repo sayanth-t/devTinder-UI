@@ -39,7 +39,9 @@ const EditProfile = ({user , connectionsCount , handleToast}) => {
         const reader = new FileReader() ;
          reader.onloadend = async () => {
           setAvatarURL(reader.result) ;
-          await axios.post("http://localhost:3000/profile/avatar/edit",{avatarURL : reader.result },{withCredentials:true})
+          const res = await axios.post("http://localhost:3000/profile/avatar/edit",{avatarURL : reader.result },{withCredentials:true}) ;
+          
+          dispatch(addUser(reader.res))
         }
         reader.readAsDataURL(file);
 

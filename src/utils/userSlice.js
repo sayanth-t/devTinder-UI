@@ -19,7 +19,7 @@ const userSlice = createSlice({
 
         } , 
         editUser : ( state , action ) => {
-            return action.payload
+            return { ...state , ...action.payload}
         } , 
         removeUser : (  ) => {
             return null

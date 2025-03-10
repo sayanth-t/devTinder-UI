@@ -50,3 +50,10 @@
 
 - New Section - for showing messages and connections list
     - install lucid react for icons 
+    - for showing message time , install date-fns for formating time
+
+- For Real Time Chat Feature use **Socket.IO**
+    - install socket.io-client
+    - in utils folder create socke.js
+
+ 

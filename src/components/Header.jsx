@@ -5,6 +5,8 @@ import { removeUser } from '../utils/userSlice';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { removeFeed } from '../utils/feedSlice';
 import { removeRequests } from '../utils/requestsSlice';
+import { getSocket } from '../utils/socket';
+import { removeSocket } from '../utils/socketSlice';
 
 const Header = () => {
   const user = useSelector((state) => state.user);
@@ -21,6 +23,13 @@ const Header = () => {
       dispatch(removeUser());
       dispatch(removeFeed());
       dispatch(removeRequests());
+
+      const socket = getSocket()
+      if(socket){
+        socket.disconnect()
+      }
+      dispatch(removeSocket()) ;
+
       navigate('/login');
     } catch (error) {
       console.log(error.message);

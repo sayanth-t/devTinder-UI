@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch  } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { connectSocket } from '../utils/socket';
+import { addOnlineUser } from '../utils/onlineUserSlice';
 
 const Body = () => {
   const naviagate = useNavigate();
@@ -23,6 +25,13 @@ const Body = () => {
 
       dispatch(addUser(res.data.message));
 
+      const socket = connectSocket(res.data.message._id) ;
+      socket.connect() ;
+
+      socket.on("onlineUsers" , (users)=> {
+              dispatch(addOnlineUser(users))
+            })
+     
       naviagate('/feed');
     } catch (err) {
       // user only navigate to login when error 401 happens => this find from postman . make profile get api without login

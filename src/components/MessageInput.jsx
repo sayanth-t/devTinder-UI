@@ -2,6 +2,9 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewMessage } from '../utils/messageSlice';
+import { connectSocket } from '../utils/socket';
+import { useEffect } from 'react';
+
 
 // import lucid icons
 import { Image, Send , X } from 'lucide-react';
@@ -13,6 +16,17 @@ const MessageInput = () => {
   const selectedUser = useSelector((state) => state.selectedUser);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+      const socket = connectSocket();
+      socket.on('newMessage', (message) => {
+        if (message) {
+          console.log("new message -- " , message );
+        }
+  
+     
+      });
+    }, []);
 
   //for sending message
   const sendMessage = async (e) => {
@@ -26,7 +40,7 @@ const MessageInput = () => {
       console.log('after sending -- ', res.data.message.text);
       dispatch(addNewMessage(res.data.message));
       setText('');
-      setImagePreview(null)
+      setImagePreview(null) 
     } catch (err) {
       console.log(err.message);
     }

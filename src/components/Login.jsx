@@ -8,6 +8,9 @@ import { addUser } from '../utils/userSlice';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import styles
 import { useNavigate } from 'react-router-dom';
+import { connectSocket } from '../utils/socket';
+import { addSocket } from '../utils/socketSlice';
+import { addOnlineUser } from '../utils/onlineUserSlice';
 
 const Login = () => {
   const [emailID, setEmailID] = useState('asarpp123@gmail.com');
@@ -29,6 +32,16 @@ const Login = () => {
       );
 
       dispatch(addUser(res.data.user));
+
+      const socket = connectSocket(res.data.user._id)
+      // for connecting to the server
+      socket.connect()
+
+      socket.on("onlineUsers" , (users)=> {
+        dispatch(addOnlineUser(users))
+      })
+
+      dispatch(addSocket(socket.id))
 
       navigate('/feed');
     } catch (error) {
