@@ -5,7 +5,12 @@ const messageSlice = createSlice({
     initialState : [] ,
     reducers : {
         addMessages : (state,action) => action.payload ,
-        addNewMessage : (state,action) => [...state,action.payload] ,
+        addNewMessage : (state,action) => {
+
+            console.log('new message ---- ',action.payload)
+            state.push(action.payload) ;
+            
+        } ,
         removeMessage : () => []
     }
 

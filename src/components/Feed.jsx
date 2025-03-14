@@ -105,7 +105,7 @@ const Feed = () => {
   }
 
   return (
-    <div className="lg:h-screen flex items-center justify-between overflow-hidden">
+    <div className="lg:h-screen h-full flex items-center justify-between overflow-hidden">
       <div className="flex flex-1 justify-center">
         <UserCard feedUser={feedUsers[0]} sendRequest={sendConnection} />
       </div>

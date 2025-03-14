@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addNewMessage } from '../utils/messageSlice';
-import { connectSocket } from '../utils/socket';
+import { getSocket } from '../utils/socket';
 import { useEffect } from 'react';
 
 
@@ -17,15 +17,23 @@ const MessageInput = () => {
 
   const dispatch = useDispatch();
 
+  // for real time chat
   useEffect(() => {
-      const socket = connectSocket();
-      socket.on('newMessage', (message) => {
+
+      const socket = getSocket();
+
+      const handleNewMessages =  (message) => {
         if (message) {
-          console.log("new message -- " , message );
+          dispatch(addNewMessage(message))
         }
-  
-     
-      });
+      }
+
+      socket.on( 'newMessage' , handleNewMessages );
+
+      return () => {
+        socket.off( 'newMessage' , handleNewMessages );
+      }
+
     }, []);
 
   //for sending message
@@ -37,10 +45,10 @@ const MessageInput = () => {
         { text , imagePreview },
         { withCredentials: true }
       );
-      console.log('after sending -- ', res.data.message.text);
       dispatch(addNewMessage(res.data.message));
       setText('');
       setImagePreview(null) 
+      
     } catch (err) {
       console.log(err.message);
     }

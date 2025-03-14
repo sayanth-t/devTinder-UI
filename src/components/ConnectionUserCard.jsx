@@ -1,6 +1,6 @@
 import { HiOutlineChatAlt, HiOutlineUserRemove } from 'react-icons/hi'; 
 
-const ConnectionUserCard = ({ user }) => {
+const ConnectionUserCard = ({ user , removeUserConnection }) => {
   const { _id , firstName, lastName, age, about, avatarURL } = user;
 
   return (
@@ -37,7 +37,7 @@ const ConnectionUserCard = ({ user }) => {
         <button
           className="p-2 text-slate-500 hover:text-red-500 focus:outline-none hover:cursor-pointer"
           aria-label="Unfollow"
-          onClick={() => console.log(`Unfollow ${firstName}`)}
+          onClick={() => removeUserConnection(_id)}
         >
           <HiOutlineUserRemove className="h-5 w-5" />
         </button>
