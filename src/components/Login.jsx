@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { GoogleLogin } from '@react-oauth/google';
 
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
@@ -13,6 +14,8 @@ import { addSocket } from '../utils/socketSlice';
 import { addOnlineUser } from '../utils/onlineUserSlice';
 
 const Login = () => {
+
+
   const [emailID, setEmailID] = useState('asarpp123@gmail.com');
   const [password, setPassword] = useState('asArpp@123');
 
@@ -55,6 +58,18 @@ const Login = () => {
       }
     }
   };
+
+  const handleSuccess = async (response) => {
+    try {
+      const token = response.credential ;
+
+      // making post request to google authentication 
+      const res = await axios.post('http://localhost:3000/auth/google',{token},{withCredentials : true}) ;
+      console.log(res) ;
+    } catch (err) {
+      console.log(err.message)
+    }
+  }
 
   return (
     <section className="dev-bg dark:bg-gray-900 min-h-screen flex items-center justify-center p-4 ">
@@ -142,7 +157,8 @@ const Login = () => {
                 or
               </div>
             </div>
-            <button
+            {/* <button
+            
               type="button"
               className="w-full flex items-center justify-center gap-3 text-gray-700 bg-white border border-gray-300 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-gray-700 dark:text-white dark:border-gray-600 dark:hover:bg-gray-600 dark:focus:ring-gray-700"
             >
@@ -152,8 +168,14 @@ const Login = () => {
                 className="w-5 h-5"
               />
               Continue with Google
-            </button>
+            </button> */}
+           
+            
           </form>
+          <div className='w-full flex items-center justify-center'>
+            <GoogleLogin onSuccess={ handleSuccess }
+             onError={()=> {console.log('something went wrongg')}}/>
+            </div>
           <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
             Don’t have an account yet?{' '}
             <a

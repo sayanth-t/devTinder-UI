@@ -56,4 +56,8 @@
     - install socket.io-client
     - in utils folder create socke.js
 
- 
+ - AuthO
+    - create a application in authO official website
+    - configure the application
+        - set callback URL , logout URL , allowed origins
+    - then install `@auth0/auth0-react`

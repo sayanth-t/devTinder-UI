@@ -110,7 +110,7 @@ const Feed = () => {
         <UserCard feedUser={feedUsers[0]} sendRequest={sendConnection} />
       </div>
       {/* Hide SideSection on small screens, show on large screens */}
-      <div className="bg-gray-50 flex h-full rounded-lg overflow-hidden pt-16 max-md:max-w-sm max-md:hidden">
+      <div className="bg-red-50 flex h-full min-h-screen rounded-lg overflow-hidden pt-16 max-md:max-w-sm max-md:hidden">
     
         <div className='lg:min-w-sm md:min-w-2xs'>
          { !selectedUser ? <NoChatSelected/> : <ChatContainer/>}
