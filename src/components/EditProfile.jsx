@@ -10,7 +10,7 @@ const EditProfile = ({user , connectionsCount , handleToast}) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastname] = useState(user.lastName);
   const [age, setAge] = useState(user.age);
-  const [emailID, setEmailID] = useState(user.emailID);
+  const [emailID] = useState(user.emailID);
   const [avatarURL, setAvatarURL] = useState(user.avatarURL);
   const [about, setAbout] = useState(user.about);
 
@@ -39,7 +39,7 @@ const EditProfile = ({user , connectionsCount , handleToast}) => {
         const reader = new FileReader() ;
          reader.onloadend = async () => {
           setAvatarURL(reader.result) ;
-          const res = await axios.post("http://localhost:3000/profile/avatar/edit",{avatarURL : reader.result },{withCredentials:true}) ;
+          await axios.post("http://localhost:3000/profile/avatar/edit",{avatarURL : reader.result },{withCredentials:true}) ;
           
           dispatch(addUser(reader.res))
         }
@@ -113,13 +113,13 @@ const EditProfile = ({user , connectionsCount , handleToast}) => {
           {/* Profile Details */}
           <div className="mt-20 text-center border-b pb-12">
             <h1 className="text-4xl font-medium text-gray-700">
-              {firstName + ' ' + lastName}
-              <span className="font-light text-gray-500">{',' + age}</span>
+              { firstName } 
+              { lastName && lastName  }
+              
+              <span className="font-light text-gray-500"> , { + age && age}</span>
             </h1>
             <p className="font-light text-gray-600 mt-3">{emailID}</p>
-            <p className="mt-8 text-gray-500">
-              Solution Manager - Creative Tim Officer
-            </p>
+            
             <p className="mt-2 text-gray-500">{about && about}</p>
           </div>
 

@@ -1,22 +1,22 @@
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useDispatch } from "react-redux";
 // Import toastify
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import styles
+import { addUser } from '../utils/userSlice';
 
 const SignupForm = () => {
   const navigate = useNavigate();
-
-  const [firstName, setFirstName] = useState('mani');
-  const [lastName, setLastname] = useState('p');
-  const [age, setAge] = useState('36');
-  const [emailID, setEmailID] = useState('maniyee123@gmail.com');
-  const [password, setPassword] = useState('mAni@123');
-  const [confirmPassword, setConfirmPassword] = useState('mAni@123');
+  const dispatch = useDispatch()
+  const [firstName, setFirstName] = useState('sayanth');
+  const [lastName, setLastname] = useState('r');
+  const [age, setAge] = useState('21');
+  const [emailID, setEmailID] = useState('tsayanth8@gmail.com');
 
   const [checkbox, setCheckBox] = useState(false);
+  const [isSending,setIsSending] = useState(false) ;
 
   const handleCheck = (e) => {
     setCheckBox(e.target.checked);
@@ -28,21 +28,29 @@ const SignupForm = () => {
       if (!checkbox) {
         throw new Error('please read & accept our terms and conditions ');
       }
-      if(password !== confirmPassword) {
-        throw new Error('Passwords are not match!')
-      }
-       await axios.post(
+    
+      setIsSending(true)
+       const res = await axios.post(
         'http://localhost:3000/signup',
-        { firstName, lastName, emailID, age, password },
+        { firstName, lastName, emailID, age },
         { withCredentials: true }
       );
 
+      if( res?.data?.userId ){
+        toast.info("We've sent a verification email to your inbox. Please check your spam folder if you don’t see it",   {
+          position: 'top-right',
+          autoClose: 3000,
+        })
+        dispatch(addUser( { _id : res?.data?.userId } ))
+      }
      
-      navigate('/login');
+      navigate('/signup/verify-emailId');
     } catch (error) {
       
+      setIsSending(false)
+
       toast.error(
-        error.response.data.message || 'Signup Failed',
+        error?.response?.data?.message || error.message ||  'Signup Failed',
         {
           position: 'top-right',
           autoClose: 3000,
@@ -53,7 +61,7 @@ const SignupForm = () => {
 
   return (
     <section className="dev-bg dark:bg-gray-900">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <div  className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
@@ -149,62 +157,6 @@ const SignupForm = () => {
                 />
               </div>
 
-              {/* password */}
-              <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Password
-                </label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
-                  name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-
-              {/* confirm password */}
-              <div>
-                <label
-                  htmlFor="confirm-password"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Confirm password
-                </label>
-                <input
-                  type="password"
-                  value={confirmPassword}
-                  onChange={(e) => {
-                    setConfirmPassword(e.target.value);
-                  }}
-                  name="confirm-password"
-                  id="confirm-password"
-                  placeholder="••••••••"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-
-              {/* to show passwords are match or not */}
-              <div>
-                {password !== confirmPassword && (
-                  <label
-                    htmlFor="confirm-password"
-                    className="block mb-2 text-sm font-medium text-red-500 dark:text-white"
-                  >
-                    Password are not match
-                  </label>
-                )}
-              </div>
-
               <div className="flex items-start">
                 <div className="flex items-center h-5">
                   <input
@@ -238,6 +190,10 @@ const SignupForm = () => {
               >
                 Create Account
               </button>
+
+              { isSending && <div className='w-full flex justify-center'>
+                <progress className="progress w-56"></progress>
+                </div>}
 
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Already have an account?{' '}

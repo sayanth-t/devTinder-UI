@@ -110,7 +110,7 @@ const MessageInput = () => {
             accept="image/*"
             className="hidden"
             id="imageUpload"
-            onChange={handleImageChange} // Removed () to avoid immediate execution
+            onChange={handleImageChange}
           />
 
           {/* Button to Trigger File Input */}

@@ -12,14 +12,19 @@ import {  addSelectedUser } from '../utils/SelectedUserSlice';
 import { addMessages } from '../utils/messageSlice';
 import NoChatSelected from './NoChatSelected';
 import ChatContainer from './ChatContainer';
+import { useNavigate } from 'react-router-dom';
+
 
 
 const Feed = () => {
   const feedData = useSelector((state) => state.feed );
   const selectedUser = useSelector((state)=> state.selectedUser ) ;
-  
-  const dispatch = useDispatch();
 
+  const navigate = useNavigate()
+
+  const user = useSelector((state)=> state.user ) ;
+  
+  const dispatch = useDispatch() ;
 
   const sendConnection = async (status, toUserId) => {
     await axios.post(
@@ -87,6 +92,9 @@ const Feed = () => {
     fetchConnections();
   }, []);
 
+  if(!user){
+    navigate("/login")
+  }
 
   const feedUsers = Array.from(feedData || []);
 
@@ -105,12 +113,12 @@ const Feed = () => {
   }
 
   return (
-    <div className="lg:h-screen h-full flex items-center justify-between overflow-hidden">
+    <div className="lg:h-screen  h-full flex items-center justify-between overflow-hidden">
       <div className="flex flex-1 justify-center">
         <UserCard feedUser={feedUsers[0]} sendRequest={sendConnection} />
       </div>
       {/* Hide SideSection on small screens, show on large screens */}
-      <div className="bg-red-50 flex h-full min-h-screen rounded-lg overflow-hidden pt-16 max-md:max-w-sm max-md:hidden">
+      <div className="bg-base-100/50 flex h-full min-h-screen rounded-lg overflow-hidden pt-16 max-md:max-w-sm max-md:hidden">
     
         <div className='lg:min-w-sm md:min-w-2xs'>
          { !selectedUser ? <NoChatSelected/> : <ChatContainer/>}

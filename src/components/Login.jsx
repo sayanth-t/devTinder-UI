@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {  useState } from 'react';
 import axios from 'axios';
 import { GoogleLogin } from '@react-oauth/google';
 
@@ -13,15 +13,24 @@ import { connectSocket } from '../utils/socket';
 import { addSocket } from '../utils/socketSlice';
 import { addOnlineUser } from '../utils/onlineUserSlice';
 
-const Login = () => {
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
 
+import { loginPng } from '../utils/constants';
+
+const Login = () => {
+  const navigate = useNavigate();
 
   const [emailID, setEmailID] = useState('asarpp123@gmail.com');
   const [password, setPassword] = useState('asArpp@123');
 
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
+  useGSAP(()=>{
+    gsap.from("#loginSection",{ opacity : 0 , x : 100 , duration : 1  , ease : "power1"}) ;
+    gsap.from("#dev-img",{ opacity : 0 , x : -100 , duration : 1  , ease : "power1"}) ;
+    
+  },[])
 
   const handleLogin = async () => {
     try {
@@ -46,7 +55,11 @@ const Login = () => {
 
       dispatch(addSocket(socket.id))
 
-      navigate('/feed');
+      toast.success( "Logged in Successfully", {
+        position: "top-right",
+        autoClose: 3000,
+        onClose : ()=> navigate("/feed")
+      });
     } catch (error) {
       if (error.response) {
         toast.error(error.response.data.message || 'Login Failed', {
@@ -65,15 +78,47 @@ const Login = () => {
 
       // making post request to google authentication 
       const res = await axios.post('http://localhost:3000/auth/google',{token},{withCredentials : true}) ;
-      console.log(res) ;
+
+
+      if( res.data.message === "Logged Successfully!" || res.data.message === "email already exist" ){
+            dispatch(addUser(res.data.user));
+            const socket = connectSocket(res.data.user._id)
+            // for connecting to the server
+            socket.connect()
+
+            socket.on("onlineUsers" , (users)=> {
+              dispatch(addOnlineUser(users))
+            })
+
+            dispatch(addSocket(socket.id)) ;
+
+            toast.success( "Logged in Successfully", {
+              position: "top-right",
+              autoClose: 3000,
+              onClose : ()=> navigate("/feed")
+            });
+            
+        }
+      
     } catch (err) {
+    
+      toast.error(err.response?.data?.message || "Something went wrong!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
       console.log(err.message)
     }
   }
 
+  
+  
+ 
   return (
-    <section className="dev-bg dark:bg-gray-900 min-h-screen flex items-center justify-center p-4 ">
-      <div className="w-full max-w-sm sm:max-w-md bg-gray-100 shadow-xl rounded-lg  dark:border dark:bg-gray-800 dark:border-gray-700 mx-auto">
+    <section className="dev-bg dark:bg-gray-900 min-h-screen flex flex-col lg:flex-row lg:justify-between items-center justify-center  p-4 ">
+      
+      <div id='dev-img' className='flex flex-1 justify-center items-center max-lg:hidden'><img width={700} src={loginPng} alt="DEVELOPER" /></div>
+      <div className='flex flex-1 justify-center items-center'>
+      <div  id='loginSection' className="lg:min-w-md sm:max-w-md bg-gray-100 shadow-xl rounded-lg  dark:border dark:border-gray-700 ">
         <div className="p-6 space-y-6 sm:p-8">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white text-center">
             Sign in to your account
@@ -187,8 +232,9 @@ const Login = () => {
           </p>
         </div>
       </div>
+      </div>
 
-      <ToastContainer />
+      
     </section>
   );
 };

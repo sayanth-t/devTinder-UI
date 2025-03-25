@@ -8,6 +8,8 @@ import { removeRequests } from '../utils/requestsSlice';
 import { getSocket } from '../utils/socket';
 import { removeSocket } from '../utils/socketSlice';
 
+
+
 const Header = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -50,7 +52,7 @@ const Header = () => {
 
       <div className="flex gap-8 items-center">
         {/* Notification Icon with Count */}
-        {user && (
+        {user?.firstName && (
           <div className="relative">
             <Link to={'/requests'}>
               <IoMdNotificationsOutline className="h-8 w-8 text-gray-700 cursor-pointer" />
@@ -64,7 +66,7 @@ const Header = () => {
         )}
 
         {/* User Avatar Dropdown */}
-        {user && (
+        { user?.firstName && (
           <div className="dropdown dropdown-end">
             <Link to={'/profile'}>
               <div className="flex flex-row justify-center items-center gap-2 hover:cursor-pointer">
@@ -86,19 +88,8 @@ const Header = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100/90 backdrop-blur-lg rounded-box z-1 mt-3 w-52 p-2 shadow-lg transform transition-all duration-300 ease-in-out origin-top scale-0 dropdown-open:scale-100"
             >
-              <li>
-                <Link
-                  to={'/profile'}
-                  className="justify-between hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 rounded-lg"
-                >
-                  {user.firstName}
-                </Link>
-              </li>
-              <li>
-                <a className="hover:bg-gray-100 active:bg-gray-200 transition-colors duration-200 rounded-lg">
-                  Settings
-                </a>
-              </li>
+              
+            
               <li>
                 <a
                   onClick={handleLogOut}
@@ -108,6 +99,7 @@ const Header = () => {
                 </a>
               </li>
             </ul>
+            
           </div>
         )}
       </div>

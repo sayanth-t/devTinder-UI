@@ -1,17 +1,11 @@
-import { useEffect, useMemo  } from 'react';
-import { Link } from 'react-router-dom';
-
+import { useMemo  } from 'react';
 import EditProfile from './EditProfile';
-import {useDispatch, useSelector } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import styles
 
 
-
 const Profile = () => {
-
-  
 
   const handleToast = (type) => {
     if (type === 'success') {
@@ -26,7 +20,6 @@ const Profile = () => {
       });
     }
   };
-
  
   const user = useSelector((state) => state.user );
 

@@ -9,17 +9,17 @@ const SideSection = ({ getMessage, selectedUser }) => {
   console.log('online Users - ' , onlineUsers ) ;
 
   return (
-    <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
-      <div className="border-b border-base-300 w-full p-5">
-        <div className="flex items-center gap-2">
+    <aside className="h-screen  w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200 border-l-2" >
+      <div className="border-b border-base-300 w-full p-5 max-lg:p-3">
+        <div className="flex items-center">
           
-          <span className="font-medium hidden lg:block">Connections</span>
+          <span className="font-medium max-lg:text-xs">Connections</span>
         </div>
         
       </div>
 
-      <div className="overflow-y-auto w-full py-3">
-        {connections.map((user) => (
+      <div className="overflow-y-auto flex-1 py-2">
+        { connections.length > 0 ? connections.map((user) => (
           <button
             key={user._id}
             onClick={() => getMessage(user) }
@@ -39,7 +39,7 @@ const SideSection = ({ getMessage, selectedUser }) => {
                 alt={user.firsName}
                 className="size-12 object-cover rounded-full"
               />
-              {onlineUsers.includes(user._id) && (
+              { onlineUsers.includes(user._id) && (
                 <span
                   className="absolute bottom-0 right-0 size-3 bg-green-500 
                 rounded-full ring-2 ring-zinc-900"
@@ -57,7 +57,11 @@ const SideSection = ({ getMessage, selectedUser }) => {
               </div>
             </div>
           </button>
-        ))}
+        )) : (
+          <div className="flex flex-col items-center justify-center h-full">
+            <p className="text-gray-500 dark:text-gray-400 text-center max-lg:text-xs">No Connections yet!</p>
+          </div>
+        ) }
 
         
       </div>
