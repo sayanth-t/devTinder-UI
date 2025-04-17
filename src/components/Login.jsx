@@ -34,6 +34,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
+      console.log('user tirs to login')
       const res = await axios.post(
         'http://localhost:3000/login',
         {

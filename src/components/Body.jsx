@@ -37,6 +37,7 @@ const Body = () => {
       
         naviagate('/feed');
       }
+      
     } catch (err) {
       // user only navigate to login when error 401 happens => this find from postman . make profile get api without login
       if (err.status === 401) {

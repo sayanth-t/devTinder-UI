@@ -23,7 +23,7 @@ const SignupPassword = () => {
         const res = await axios.post(`http://localhost:3000/signup/verifyPassword/${user._id}`,{password},{withCredentials:true}) ;
 
         if(res.data.passwordVerification){
-          navigate("/feed") ;
+          navigate("/signup/profileSetup") ;
         }
       } catch (err) {
         toast.error( err.message || "Signup failed" ,{

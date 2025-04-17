@@ -4,11 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { removeUser } from '../utils/userSlice';
 import { IoMdNotificationsOutline } from 'react-icons/io';
 import { removeFeed } from '../utils/feedSlice';
-import { removeRequests } from '../utils/requestsSlice';
+import { addRequests, removeRequests } from '../utils/requestsSlice';
 import { getSocket } from '../utils/socket';
 import { removeSocket } from '../utils/socketSlice';
-
-
+import { useEffect } from 'react';
 
 const Header = () => {
   const user = useSelector((state) => state.user);

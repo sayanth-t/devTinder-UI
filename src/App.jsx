@@ -11,6 +11,7 @@ import Connections from './components/Connections.jsx';
 import Requests from './components/Requests.jsx';
 import SignupEmailVerify from './components/SignupEmailVerify.jsx';
 import SignupPassword from './components/SignupPassword.jsx';
+import SkillsAndProfile from './components/SkillsAndProfile.jsx';
 
 function App() {
   
@@ -24,6 +25,7 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path='/signup/verify-emailId' element={<SignupEmailVerify/>} />
             <Route path='/signup/password' element={<SignupPassword/>} />
+            <Route path='/signup/profileSetup' element={<SkillsAndProfile/>}/>
 
             <Route path="/profile" element={<Profile />} />
             <Route path="/feed" element={<Feed />} />

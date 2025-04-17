@@ -4,7 +4,7 @@ const ChatHeader = () => {
 
   const onlineUsers = useSelector((state) => state.onlineUsers ) ;
  
-  const { _id , firstName , lastname , avatarURL } = selectedUser
+  const { _id , firstName ,  avatarURL } = selectedUser
     return (
       <div className="p-2.5 border-b border-base-300">
       <div className="flex items-center justify-between">
@@ -12,7 +12,13 @@ const ChatHeader = () => {
           {/* Avatar */}
           <div className="avatar">
             <div className="size-10 rounded-full relative">
-              <img src={ avatarURL || "/avatar.png"} alt={ firstName } />
+            {
+                avatarURL ? (<img
+                src={avatarURL }
+                alt={firstName}
+                className="size-12 object-cover rounded-full"
+              /> ): (<img src='https://res.cloudinary.com/dl8q6vzmq/image/upload/v1742800503/j8iajgjrnyzzqcjt2wwd.jpg ' alt={firstName} className="size-12 object-cover rounded-full"/>)
+              }
             </div>
           </div>
 

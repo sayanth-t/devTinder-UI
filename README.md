@@ -61,3 +61,23 @@
     - configure the application
         - set callback URL , logout URL , allowed origins
     - then install `@auth0/auth0-react`
+
+- AWS Steps 
+    - For create instance 
+        - add name => eg: devTinder
+        - select the operating system => select Ubundu => Ubundu is most companies used
+        - select instance type => on free tier we are only eligible to use micro
+        - create a key pair to securely connect to our instances => eneter name eg: devTinderSecret =>  select RSA => also select perm
+        - then launch instance
+    - Connect to instance
+        - use SSH Client
+        - open gitBash => run - `chmod 400 <secretKey>`
+        - then copy the ssh prompt and run => `ssh -i <secretkey> ubuntu@ipAddress`
+        - now we are in our virtual machine
+        - install node js => `curl -o- https://fnm.vercel.app/install | bash`
+        - **then check wich node version is installed on local , then install same vesion of node in virtual server**
+        - install same version of node => `fnm install 20.16.0`
+        - clone backend & frontend from github 
+            - go to GITHUB => copy the HTTPS Url => then run => git clone <HTTPS link>
+            - do same thing for backend and frontend seperately
+   

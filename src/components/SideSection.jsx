@@ -6,8 +6,6 @@ const SideSection = ({ getMessage, selectedUser }) => {
 
   const onlineUsers = useSelector((state)=> state.onlineUsers ) ;
 
-  console.log('online Users - ' , onlineUsers ) ;
-
   return (
     <aside className="h-screen  w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200 border-l-2" >
       <div className="border-b border-base-300 w-full p-5 max-lg:p-3">
@@ -34,11 +32,13 @@ const SideSection = ({ getMessage, selectedUser }) => {
           `}
           >
             <div className="relative mx-auto lg:mx-0">
-              <img
+              {
+                user.avatarURL ? (<img
                 src={user.avatarURL }
                 alt={user.firsName}
                 className="size-12 object-cover rounded-full"
-              />
+              /> ): (<img src='https://res.cloudinary.com/dl8q6vzmq/image/upload/v1742800503/j8iajgjrnyzzqcjt2wwd.jpg ' alt={user.firsName} className="size-12 object-cover rounded-full"/>)
+              }
               { onlineUsers.includes(user._id) && (
                 <span
                   className="absolute bottom-0 right-0 size-3 bg-green-500 

@@ -59,6 +59,7 @@ const Feed = () => {
 
       dispatch(addConnections(res.data.connections));
     } catch (err) {
+      navigate('/login')
       console.log(err.message);
     }
   };
@@ -82,6 +83,7 @@ const Feed = () => {
   // fetch messages 
   const getMessage = async (toUser) => {
     const res = await axios.get("http://localhost:3000/message/"+toUser._id , {withCredentials: true}) ;
+    
     dispatch(addSelectedUser( toUser )) ;
     dispatch(addMessages(res.data.data))
   } 

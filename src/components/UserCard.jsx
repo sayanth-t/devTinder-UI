@@ -1,7 +1,38 @@
+import { useEffect } from "react";
+import { getSocket } from "../utils/socket";
+import { useDispatch } from "react-redux";
+import { addNewRequest } from "../utils/requestsSlice";
 
 const UserCard = ({ feedUser , sendRequest }) => {
 
-  const {_id,firstName,lastName,age,avatarURL,about} = feedUser 
+  const dispatch = useDispatch()
+
+  const {_id,firstName,lastName,age,avatarURL,about} = feedUser ;
+
+    // for real time notification
+    useEffect(()=>{
+      const socket = getSocket() ;
+  
+      console.log("sockttt -- " , socket )
+  
+      const getRequest = (connectionData) => {
+        console.log('connection data - ' , connectionData ) ;
+        
+        dispatch(addNewRequest(connectionData))
+        
+      }
+
+      if(!socket){
+        return
+      }
+
+      socket.on("conectionRequest",getRequest) ;
+      
+      return () => {
+        socket.off( "conectionRequest",getRequest )
+      }
+      
+    },[])
 
   return (
     <section className="min-h-screen w-full flex justify-center items-center">

@@ -27,8 +27,8 @@ const ChatContainer = () => {
                   <img
                     src={
                       message.senderId === user._id
-                        ? user.avatarURL || '/avatar.png'
-                        : selectedUser.avatarURL || '/avatar.png'
+                        ? user.avatarURL || 'https://res.cloudinary.com/dl8q6vzmq/image/upload/v1742800503/j8iajgjrnyzzqcjt2wwd.jpg'
+                        : selectedUser.avatarURL || 'https://res.cloudinary.com/dl8q6vzmq/image/upload/v1742800503/j8iajgjrnyzzqcjt2wwd.jpg'
                     }
                     alt="profile pic"
                   />

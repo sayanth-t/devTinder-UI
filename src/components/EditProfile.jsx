@@ -13,6 +13,7 @@ const EditProfile = ({user , connectionsCount , handleToast}) => {
   const [emailID] = useState(user.emailID);
   const [avatarURL, setAvatarURL] = useState(user.avatarURL);
   const [about, setAbout] = useState(user.about);
+  const [skills,setSkills] = useState(user.skills)
 
   const dispatch = useDispatch()
 
@@ -39,9 +40,9 @@ const EditProfile = ({user , connectionsCount , handleToast}) => {
         const reader = new FileReader() ;
          reader.onloadend = async () => {
           setAvatarURL(reader.result) ;
-          await axios.post("http://localhost:3000/profile/avatar/edit",{avatarURL : reader.result },{withCredentials:true}) ;
+          await axios.post("http://localhost:3000/profile/avatar/edit",{ avatarURL : reader.result },{withCredentials:true}) ;
           
-          dispatch(addUser(reader.res))
+          dispatch(addUser(reader.result))
         }
         reader.readAsDataURL(file);
 
@@ -111,16 +112,27 @@ const EditProfile = ({user , connectionsCount , handleToast}) => {
           </div>
 
           {/* Profile Details */}
-          <div className="mt-20 text-center border-b pb-12">
-            <h1 className="text-4xl font-medium text-gray-700">
-              { firstName } 
-              { lastName && lastName  }
-              
-              <span className="font-light text-gray-500"> , { + age && age}</span>
-            </h1>
-            <p className="font-light text-gray-600 mt-3">{emailID}</p>
+          <div className="mt-20 flex flex-col items-center text-center border-b pb-12">
+            <div>
+              <h1 className="text-4xl font-medium text-gray-700">
+                { firstName } 
+                { lastName && lastName  }
+                
+                <span className="font-light text-gray-500"> , { + age && age}</span>
+              </h1>
+            </div>
+            <div>
+             <p className="font-light text-gray-600 mt-3">{emailID}</p>
+            </div>
+            <div className="flex mx-auto gap-1">
+              { skills.map((skill)=>(
+                <span>{skill}</span>
+              ))}
+            </div>
             
-            <p className="mt-2 text-gray-500">{about && about}</p>
+            <div>
+              <p className="mt-2 text-gray-500">{about && about}</p>
+            </div>
           </div>
 
           {/* Bio Section */}
