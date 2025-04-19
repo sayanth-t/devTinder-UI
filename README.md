@@ -81,3 +81,11 @@
             - go to GITHUB => copy the HTTPS Url => then run => git clone <HTTPS link>
             - do same thing for backend and frontend seperately
    
+
+- STRIPE integration
+    - npm install @stripe/stripe-js @stripe/react-stripe-js
+    - import loadStripe
+    - then create stripePromise => const stripePromise = loadStripe('your_stripe_public_key')
+    - redirect user to checkout page with session id
+        - const stripe = await stripePromise;
+        - await stripe.redirectToCheckout({ sessionId });

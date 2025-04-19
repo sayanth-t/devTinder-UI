@@ -12,6 +12,7 @@ import Requests from './components/Requests.jsx';
 import SignupEmailVerify from './components/SignupEmailVerify.jsx';
 import SignupPassword from './components/SignupPassword.jsx';
 import SkillsAndProfile from './components/SkillsAndProfile.jsx';
+import PaymentSuccess from './components/PaymentSuccess.jsx';
 
 function App() {
   
@@ -31,8 +32,11 @@ function App() {
             <Route path="/feed" element={<Feed />} />
             <Route path="/connections" element={<Connections />} />
             <Route path="/requests" element={<Requests />} />
+
+            <Route path='/payment/success' element={<PaymentSuccess/>} />
             
           </Route>
+
         </Routes>
       </Router>
     </Provider>

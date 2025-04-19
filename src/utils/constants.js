@@ -9,3 +9,18 @@ export const skills = [
     "MongoDB", "MySQL", "PostgreSQL", "Firebase", "React Native", "Flutter",
     "Swift", "Git", "GitHub", "GitLab"
   ];
+
+  export const plans = [
+    {
+      priceId : "price_1R3zDl2fD6ciPY2hqwHPGYaK" ,
+      price : "10$",
+      duration : "Monthly"
+    },
+    {
+      priceId : "price_1R3zI32fD6ciPY2hEswMWJW8" ,
+      price : "80$",
+      duration : "Yearly"
+    }
+  ]
+
+  
